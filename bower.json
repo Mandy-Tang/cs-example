@@ -1,0 +1,23 @@
+{
+  "name": "cs-example",
+  "description": "",
+  "main": "",
+  "authors": [
+    "mandy <189658646@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Mandy-Tang/cs-example",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3",
+    "font-awesome": "^4.6.1"
+  }
+}
