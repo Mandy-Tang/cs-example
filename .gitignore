@@ -42,6 +42,8 @@ client/bower_components
 client/build
 
 # css build file
+client/styles/css/bootstrap.css
+client/styles/css/bootstrap.css.map
 client/styles/css/bootstrap.min.css
 client/styles/css/bootstrap.min.css.map
 client/styles/css/public.min.css
