@@ -54,6 +54,7 @@ var app = angular.module('app', [
 
     'app.layout',
     'app.dashboard',
+    'app.config'
   ])
   .config(appConfig)
   .constant('API_CONFIG', window.apiConfig)
@@ -66,8 +67,9 @@ function bootstrapApp () {
   angular.bootstrap(document, ['app']);
 }
 
-$(function() {
 
-
+window.onload = function () {
   bootstrapApp();
-});
+};
+
+

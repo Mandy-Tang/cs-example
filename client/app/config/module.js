@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  function dashboardConfig($stateProvider) {
+  function configConfig($stateProvider) {
     'ngInject';
     $stateProvider
       .state('app.config', {
@@ -22,6 +22,6 @@
         }
       })
   }
-  angular.module('app.dashboard', ['ui.router'])
-    .config(dashboardConfig);
+  angular.module('app.config', ['ui.router'])
+    .config(configConfig);
 })();
