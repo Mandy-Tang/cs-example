@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+var apiRoot = '/api/v1';
+var dataFile = require('../utils/dataFile');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index_dev', { title: 'Express' });
-});
+module.exports = function (app) {
+  app.get('/', function (req, res) {
+    res.redirect('/index');
+  });
 
-module.exports = router;
+  app.get('/index', function (req, res) {
+    if (app.get('env') === 'development') {
+      res.render('index_dev');
+    }
+    else {
+      res.render('index');
+    }
+  });
+
+  app.route(apiRoot + '/users').get(require('./user/user_list'));
+
+};

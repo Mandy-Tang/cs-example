@@ -4,6 +4,9 @@
 (function () {
   function layoutCtrl ($rootScope) {
     'ngInject';
+    $rootScope.getWord = function (key) {
+      return key;
+    }
     $rootScope.myMenus = {
       'app.dashboard': true,
       'app.config': true,
@@ -18,5 +21,5 @@
       'app.config.me': true
     };
   }
-  angular.module('app.layout').controller(layoutCtrl, layoutCtrl);
+  angular.module('app.layout').controller('layoutCtrl', layoutCtrl);
 })();

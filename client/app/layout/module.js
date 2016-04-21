@@ -10,10 +10,11 @@
         },
         views: {
           root: {
-            templateUrl: '/app/layout/index.html'
+            templateUrl: '/app/layout/index.html',
+            controller: 'layoutCtrl'
           }
         }
-      })
+      });
     $urlRouterProvider.otherwise('/dashboard');
   }
 

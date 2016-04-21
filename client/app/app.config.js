@@ -2,7 +2,9 @@
 
 var apiConfig = window.apiConfig || {};
 
-apiConfig.API_ROOT_URL = '/api';
-apiConfig.POST_URL = apiConfig.API_ROOT_URL + '/post';
+apiConfig.API_ROOT= '/api/v1';
+
+apiConfig.USERS = apiConfig.API_ROOT + '/users';
+apiConfig.USER = apiConfig.API_ROOT + '/user';
 
 window.apiConfig = apiConfig;

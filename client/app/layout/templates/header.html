@@ -4,94 +4,92 @@
       <img alt="image" src="/styles/images/title_logo.png">
     </a>
   </div>
-  <div class="navbar-top-menu">
-    <ul class="nav navbar-nav" id="top-navigation">
-      <li data-ui-sref-active="active" ng-show="myMenus['app.dashboard']">
-        <a data-ui-sref="app.dashboard" title="Dashboard"><span
-          ng-bind="getWord('首页')">首页</span></a>
-      </li>
-      <li ng-class="{active: $state.includes('app.log')}" ng-show="myMenus['app.log']">
-        <a href=""><span ng-bind="getWord('日志查询')">日志查询</span></a>
-        <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.log')}">
-          <li data-ui-sref-active="active" ng-show="myMenus['app.log.alarm']">
-            <a data-ui-sref="app.log.alarm">{{getWord('威胁告警')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.log.security']">
-            <a data-ui-sref="app.log.security">{{getWord('安全日志')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.log.origin']">
-            <a data-ui-sref="app.log.origin">{{getWord('原始日志')}}</a>
-          </li>
-        </ul>
-      </li>
-      <li ng-class="{active: $state.includes('app.analysis')}" ng-show="false && myMenus['app.analysis']">
-        <a href=""><span ng-bind="getWord('可视化分析')">可视化分析</span></a>
-        <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.analysis')}">
-          <li data-ui-sref-active="active" ng-show="myMenus['app.analysis.location']">
-            <a data-ui-sref="app.analysis.location">{{getWord('地域分析')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.analysis.event']">
-            <a data-ui-sref="app.analysis.event">{{getWord('事件关联')}}</a>
-          </li>
-        </ul>
-      </li>
-      <li ng-class="{active: $state.includes('app.strategy')}"  ng-show="myMenus['app.strategy']">
-        <a href=""><span ng-bind="getWord('策略管理')">策略管理</span></a>
-        <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.strategy')}">
-          <li data-ui-sref-active="active"  ng-show="myMenus['app.strategy.asset']">
-            <a data-ui-sref="app.strategy.asset">{{getWord('资产管理')}}</a>
-          </li>
+  <ul class="nav navbar-nav navbar-first-level" id="top-navigation">
+    <li data-ui-sref-active="active" ng-show="$root.myMenus['app.dashboard']">
+      <a data-ui-sref="app.dashboard" title="Dashboard"><span
+        ng-bind="getWord('首页')">首页</span></a>
+    </li>
+    <li ng-class="{active: $state.includes('app.log')}" ng-show="$root.myMenus['app.log']">
+      <a href=""><span ng-bind="getWord('日志查询')">日志查询</span></a>
+      <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.log')}">
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.log.alarm']">
+          <a data-ui-sref="app.log.alarm">{{getWord('威胁告警')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.log.security']">
+          <a data-ui-sref="app.log.security">{{getWord('安全日志')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.log.origin']">
+          <a data-ui-sref="app.log.origin">{{getWord('原始日志')}}</a>
+        </li>
+      </ul>
+    </li>
+    <li ng-class="{active: $state.includes('app.analysis')}" ng-show="false && $root.myMenus['app.analysis']">
+      <a href=""><span ng-bind="getWord('可视化分析')">可视化分析</span></a>
+      <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.analysis')}">
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.analysis.location']">
+          <a data-ui-sref="app.analysis.location">{{getWord('地域分析')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.analysis.event']">
+          <a data-ui-sref="app.analysis.event">{{getWord('事件关联')}}</a>
+        </li>
+      </ul>
+    </li>
+    <li ng-class="{active: $state.includes('app.strategy')}"  ng-show="$root.myMenus['app.strategy']">
+      <a href=""><span ng-bind="getWord('策略管理')">策略管理</span></a>
+      <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.strategy')}">
+        <li data-ui-sref-active="active"  ng-show="$root.myMenus['app.strategy.asset']">
+          <a data-ui-sref="app.strategy.asset">{{getWord('资产管理')}}</a>
+        </li>
 
-          <li data-ui-sref-active="active"  ng-show="false && myMenus['app.strategy.list']">
-            <a data-ui-sref="app.strategy.list">{{getWord('黑白名单')}}</a>
-          </li>
-        </ul>
-      </li>
-      <li ng-class="{active: $state.includes('app.report')}"  ng-show="myMenus['app.report']">
-        <a href=""><span ng-bind="getWord('统计报表')">统计报表</span></a>
-        <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.report')}">
-          <li data-ui-sref-active="active"  ng-show="myMenus['app.report.asset']">
-            <a data-ui-sref="app.report.asset">{{getWord('风险主机TOP10')}}</a>
-          </li>
-          <li data-ui-sref-active="active"  ng-show="myMenus['app.report.alarm']">
-            <a data-ui-sref="app.report.alarm">{{getWord('威胁告警TOP10')}}</a>
-          </li>
-          <li data-ui-sref-active="active"  ng-show="myMenus['app.report.custom']">
-            <a data-ui-sref="app.report.custom">{{getWord('自定义报表')}}</a>
-          </li>
-        </ul>
-      </li>
-      <li ng-class="{active: $state.includes('app.config') && !$state.includes('app.config.me')}" ng-show="myMenus['app.config']">
-        <a href=""><span ng-bind="getWord('系统管理')">系统管理</span></a>
-        <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.config') && !$state.includes('app.config.me')}">
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.status']">
-            <a data-ui-sref="app.config.status">{{getWord('系统状态')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.setting']">
-            <a data-ui-sref="app.config.setting">{{getWord('系统配置')}}</a>
-          </li>
-          <!--<li data-ui-sref-active="active"  ng-show="myMenus['app.config.engine']">-->
-          <!--<a data-ui-sref="app.config.engine">{{getWord('检测引擎配置')}}</a>-->
-          <!--</li>-->
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.user']">
-            <a data-ui-sref="app.config.user">{{getWord('用户管理')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.role']">
-            <a data-ui-sref="app.config.role">{{getWord('角色管理')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.audit']">
-            <a data-ui-sref="app.config.audit">{{getWord('审计日志')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.authorization']">
-            <a data-ui-sref="app.config.authorization">{{getWord('授权管理')}}</a>
-          </li>
-          <li data-ui-sref-active="active" ng-show="myMenus['app.config.update']">
-            <a data-ui-sref="app.config.update">{{getWord('系统升级')}}</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+        <li data-ui-sref-active="active"  ng-show="false && $root.myMenus['app.strategy.list']">
+          <a data-ui-sref="app.strategy.list">{{getWord('黑白名单')}}</a>
+        </li>
+      </ul>
+    </li>
+    <li ng-class="{active: $state.includes('app.report')}"  ng-show="$root.myMenus['app.report']">
+      <a href=""><span ng-bind="getWord('统计报表')">统计报表</span></a>
+      <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.report')}">
+        <li data-ui-sref-active="active"  ng-show="$root.myMenus['app.report.asset']">
+          <a data-ui-sref="app.report.asset">{{getWord('风险主机TOP10')}}</a>
+        </li>
+        <li data-ui-sref-active="active"  ng-show="$root.myMenus['app.report.alarm']">
+          <a data-ui-sref="app.report.alarm">{{getWord('威胁告警TOP10')}}</a>
+        </li>
+        <li data-ui-sref-active="active"  ng-show="$root.myMenus['app.report.custom']">
+          <a data-ui-sref="app.report.custom">{{getWord('自定义报表')}}</a>
+        </li>
+      </ul>
+    </li>
+    <li ng-class="{active: $state.includes('app.config') && !$state.includes('app.config.me')}" ng-show="$root.myMenus['app.config']">
+      <a href=""><span ng-bind="getWord('系统管理')">系统管理</span></a>
+      <ul class="nav navbar-second-level" ng-class="{in: $state.includes('app.config') && !$state.includes('app.config.me')}">
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.status']">
+          <a data-ui-sref="app.config.status">{{getWord('系统状态')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.setting']">
+          <a data-ui-sref="app.config.setting">{{getWord('系统配置')}}</a>
+        </li>
+        <!--<li data-ui-sref-active="active"  ng-show="$root.myMenus['app.config.engine']">-->
+        <!--<a data-ui-sref="app.config.engine">{{getWord('检测引擎配置')}}</a>-->
+        <!--</li>-->
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.user']">
+          <a data-ui-sref="app.config.user">{{getWord('用户管理')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.role']">
+          <a data-ui-sref="app.config.role">{{getWord('角色管理')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.audit']">
+          <a data-ui-sref="app.config.audit">{{getWord('审计日志')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.authorization']">
+          <a data-ui-sref="app.config.authorization">{{getWord('授权管理')}}</a>
+        </li>
+        <li data-ui-sref-active="active" ng-show="$root.myMenus['app.config.update']">
+          <a data-ui-sref="app.config.update">{{getWord('系统升级')}}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
   <ul class="nav navbar-top-links navbar-right">
     <!--<sys-message></sys-message>-->
     <!--<alert-message></alert-message>-->

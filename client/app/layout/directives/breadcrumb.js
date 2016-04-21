@@ -7,12 +7,12 @@
       restrict: 'AE',
       template:
       '<div class="breadcrumb-wrapper">' +
-      '<i class="iconfont icon-address"></i>' +
-      '<span class="inline-block vt">&nbsp;当前位置:&nbsp;&nbsp;</span>' +
-      '<span id="breadcrumb" class="breadcrumb">' +
+      '<i class="fa fa-map-marker"></i>' +
+      '<span>&nbsp;当前位置:&nbsp;&nbsp;</span>' +
+      '<ol id="breadcrumb" class="breadcrumb">' +
       '<li ><span>level-1</span></li>' +
       '<li class="active"><span class="text-primary">level-2</span></li>' +
-      '</span>' +
+      '</ol>' +
       '</div>',
       link: function ($scope, $elem, $attr) {
 

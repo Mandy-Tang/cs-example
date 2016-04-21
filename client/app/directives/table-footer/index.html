@@ -1,0 +1,40 @@
+<div class="table-footer">
+  <div class="table-footer-info col-sm-6 col-xs-12 hidden-xs">
+    <span>第</span>
+    <span class="text-primary" ng-bind="(page.index - 1)*page.rows + 1"></span>
+    <span>至</span>
+    <span class="text-primary" ng-bind="page.index*page.rows > page.totalRows? page.totalRows:page.index*page.rows"></span>
+    <span class="mr5">条</span>
+    <span>总共</span>
+    <span class="text-primary" ng-bind="page.totalRows"></span>
+    <span>条</span>
+  </div>
+  <div class=" table-footer-pagination col-sm-6 col-xs-12 ">
+    <div class="page-skip">
+      <span>共</span>
+      <span ng-bind="page.totalPages" class="text-primary"></span>
+      <span class="mr5">页</span>
+      <span>到第</span>
+      <input type="text" class="form-control input-sm" ng-model="skipPage">
+      <span>页</span>
+      <button class="btn btn-sm btn-outline btn-primary" ng-click="toPage(skipPage)">跳转</button>
+    </div>
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li><a class="active">1</a></li>
+      <li><a>2</a></li>
+      <li><a>3</a></li>
+      <li><a>4</a></li>
+      <li><a>5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
