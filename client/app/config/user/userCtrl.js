@@ -18,11 +18,17 @@
     };
 
     $scope.page = {
-      index: 1,
+      current: 5,
       rows: 15,
       totalPages: 12,
       totalRows: 100,
-      skipPage: 1
+      skipPage: 1,
+      toPage: function (page) {
+        if (page > 0 && page <= this.totalPages) {
+          this.current = page;
+          console.log(this.current);
+        }
+      }
     };
     User.getUsers(function (res) {
       $scope.users = res.data;

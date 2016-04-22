@@ -1,9 +1,9 @@
 <div class="table-footer">
   <div class="table-footer-info col-sm-6 col-xs-12 hidden-xs">
     <span>第</span>
-    <span class="text-primary" ng-bind="(page.index - 1)*page.rows + 1"></span>
+    <span class="text-primary" ng-bind="(page.current - 1)*page.rows + 1"></span>
     <span>至</span>
-    <span class="text-primary" ng-bind="page.index*page.rows > page.totalRows? page.totalRows:page.index*page.rows"></span>
+    <span class="text-primary" ng-bind="page.current*page.rows > page.totalRows? page.totalRows:page.current*page.rows"></span>
     <span class="mr5">条</span>
     <span>总共</span>
     <span class="text-primary" ng-bind="page.totalRows"></span>
@@ -20,21 +20,13 @@
       <button class="btn btn-sm btn-outline btn-primary" ng-click="toPage(skipPage)">跳转</button>
     </div>
     <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li><a class="active">1</a></li>
-      <li><a>2</a></li>
-      <li><a>3</a></li>
-      <li><a>4</a></li>
-      <li><a>5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+      <li ng-class="{'disabled': currentPage - 1 <= 0 }" ng-click="prevPage()"><span >&laquo;</span></li>
+      <li ng-if="page.current - 2 > 0" ng-click="page.toPage(page.current - 2)"><span ng-bind="page.current - 2"></span></li>
+      <li ng-if="page.current - 1 > 0" ng-click="page.toPage(page.current - 1)"><span ng-bind="page.current - 1"></span></li>
+      <li ng-click="page.toPage(page.current)"  class="active"><span ng-bind="page.current"></span></li>
+      <li ng-if="page.current + 1 > 0" ng-click="page.toPage(page.current + 1)"><span ng-bind="page.current + 1"></span></li>
+      <li ng-if="page.current + 2 > 0" ng-click="page.toPage(page.current + 2)"><span ng-bind="page.current + 2"></span></li>
+      <li ng-class="{'disabled': currentPage + 1 > page.totalPages }" ng-click="nextPage()"><span>&raquo;</span></li>
     </ul>
   </div>
 </div>
