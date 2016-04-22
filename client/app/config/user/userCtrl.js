@@ -22,12 +22,8 @@
       rows: 15,
       totalPages: 12,
       totalRows: 100,
-      skipPage: 1,
       toPage: function (page) {
-        if (page > 0 && page <= this.totalPages) {
-          this.current = page;
-          console.log(this.current);
-        }
+        console.log('request page ' + page);
       }
     };
     User.getUsers(function (res) {
