@@ -3,6 +3,7 @@
  */
 (function () {
   function tableFooter () {
+    'ngInject';
     return {
       restrict: 'EA',
       scope: {
