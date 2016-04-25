@@ -1,0 +1,12 @@
+<div class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="text-primary fa fa-bars"></i>
+  </a>
+  <ul class="dropdown-menu " data-stopPropagation="true">
+    <div class="checkbox ml10" data-stopPropagation="true" ng-repeat="column in columns" >
+      <label data-stopPropagation="true">
+        <input type="checkbox" ng-model="column.showed"><span data-stopPropagation="true" ng-bind="column.label"></span>
+      </label>
+    </div>
+  </ul>
+</div>

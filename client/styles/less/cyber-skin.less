@@ -177,6 +177,12 @@ body.cyber-skin {
       > * {
         float: right;
       }
+      .table-column {
+        padding: 5px 12px;
+      }
+      .table-row {
+        width: 80px;
+      }
     }
     .table-filter {
       th {
@@ -231,6 +237,26 @@ body.cyber-skin {
     .table-bordered {
       &, th, td {
         border: 1px solid #e7e7e7;
+      }
+    }
+    .table-sorting {
+      .sorting {
+        cursor: pointer;
+      }
+      .sorting:after {
+        float: right;
+        padding-top: 3px;
+        content: "\f0dc";
+        font: normal normal normal 14px/1 FontAwesome;
+        color: #999;
+      }
+      .sorting-asc:after {
+        content: '\f0de' !important;
+        color: @table-th-color !important;
+      }
+      .sorting-desc:after {
+        content: '\f0dd' !important;
+        color: @table-th-color !important;
       }
     }
   }
