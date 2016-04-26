@@ -1,14 +1,16 @@
 <div class="re-table">
   <div class="table-toolbar">
-    <div class=" table-toolbar-action col-xs-12 col-sm-6 no-padding">
-      <div class="input-group table-search">
+    <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding">
+      <div ng-if="options.searchFlag" class="input-group table-search">
         <input type="search" class="form-control input-sm" ng-model="filter.search" ng-enter="searchUsers()" placeholder="{{getWord('关键字查找')}}">
         <span class="input-group-addon input-sm" role="button" ng-click="searchUsers()"><i class="fa fa-search"></i></span>
       </div>
-      <a class="btn btn-primary btn-sm" href="" data-toggle="modal" role="button"
-         data-target="#create-user-modal" ng-click="beginCreateUser()"><i class="fa fa-plus"></i></a>
-      <a class="btn btn-primary btn-sm" href="" data-toggle=" " role="button"
-         data-target=" " ng-click="beginDeleteUsers()"><i class="fa fa-trash-o"></i></a>
+      <div ng-if="options.editFlag" class="table-edit">
+        <a class="btn btn-primary btn-sm" href="" data-toggle="modal" role="button"
+           data-target="#create-user-modal" ng-click="beginCreateUser()"><i class="fa fa-plus"></i></a>
+        <a class="btn btn-primary btn-sm" href="" data-toggle=" " role="button"
+           data-target=" " ng-click="beginDeleteUsers()"><i class="fa fa-trash-o"></i></a>
+      </div>
     </div>
     <div class="table-toolbar-show col-sm-6 col-xs-12 hidden-xs no-padding">
       <table-row ng-if="options.tableRowFlag" options="options" class="table-row"></table-row>

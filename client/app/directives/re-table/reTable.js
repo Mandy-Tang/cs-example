@@ -34,8 +34,6 @@
                 $scope.filter[columns[i].name] = '';
               }
             }
-          } else {
-            $scope.filter = null;
           }
         }
 
@@ -46,16 +44,25 @@
         function initSort () {
           if ('sortFlag' in $scope.options && $scope.options.sortFlag) {
             $scope.sort = {name: '', field: '', how: ''};
-          } else {
-            $scope.sort = null;
           }
         }
 
-        initFilter();
-        initSort();
+        /**
+         * Init table
+         */
+        function initTable () {
+          initFilter();
+          initSort();
+          $scope.options.tableRowFlag = 'tableRowOptions' in $scope.options;
+          $scope.options.pageFlag = 'page' in $scope.options;
+          $scope.options.searchFlag = 'search' in $scope.options;
+          $scope.options.editFlag = 'edit' in $scope.options;
+        }
+
+        initTable();
 
         $scope.sortBy = function ($index, $event) {
-          if ($scope.sort) {
+          if ($scope.options.sortFlag) {
             var sortIn = 'sort' in columns[$index];
             var el = columns[$index];
             if (!sortIn || (sortIn && el.sort)) {
@@ -67,10 +74,11 @@
                 $scope.sort.how = $scope.sort.how === 'asc' ? 'desc' : 'asc';
               }
               // Do search
-              $scope.options.search();
+              console.log('Do search with sort')
             }
           }
         }
+
       }
     }
   }

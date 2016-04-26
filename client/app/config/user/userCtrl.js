@@ -37,16 +37,17 @@
         {name: 'locked', label: '锁定状态', showed: true, filter: 'filter_locked', filterType: 'select', placeholder: '锁定状态', sort: 'order_realname'}
       ],
       tableColumnFlag: true,
-      tableRowFlag: true,
-      tableRowOptions: [{row: 15}, {row: 25}, {row: 50}, {row: 100}],
       filterFlag: true,
       sortFlag: true,
-      searchFlag: true,
-      search: function () {
-        this.page.current = 1;
-        toPage();
+      tableRowOptions: [{row: 15}, {row: 25}, {row: 50}, {row: 100}],
+      search: {
+        name: 'search'
       },
-      pageFlag: true,
+      edit: {
+        createFlag: true,
+        updateFlag: true,
+        deleteFlag: true
+      },
       page: {
         current: 5,
         rows: 15,
