@@ -2,7 +2,7 @@
   <div class="table-toolbar">
     <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding">
       <div ng-if="options.searchFlag" class="input-group table-search">
-        <input type="search" class="form-control input-sm" ng-model="filter.search" ng-enter="searchUsers()" placeholder="{{getWord('关键字查找')}}">
+        <input type="search" class="form-control input-sm" ng-model="searchValue" ng-enter="searchUsers()" placeholder="{{getWord('关键字查找')}}">
         <span class="input-group-addon input-sm" role="button" ng-click="searchUsers()"><i class="fa fa-search"></i></span>
       </div>
       <div ng-if="options.editFlag" class="table-edit">

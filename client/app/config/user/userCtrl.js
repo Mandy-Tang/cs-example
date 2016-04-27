@@ -3,7 +3,7 @@
  */
 'use strict';
 (function () {
-  function userCtrl ($scope, User) {
+  function userCtrl ($scope, User, API_CONFIG) {
     'ngInject';
     $scope.data = [];
     $scope.page = {
@@ -36,6 +36,7 @@
         {name: 'created_time', label: '创建时间', showed: true, filter: 'filter_created_time', placeholder: '创建时间', filterType: 'time', sort: 'order_realname'},
         {name: 'locked', label: '锁定状态', showed: true, filter: 'filter_locked', filterType: 'select', placeholder: '锁定状态', sort: 'order_realname'}
       ],
+      url: API_CONFIG.USERS,
       tableColumnFlag: true,
       filterFlag: true,
       sortFlag: true,
@@ -44,6 +45,7 @@
         name: 'search'
       },
       edit: {
+        url: API_CONFIG.USER,
         createFlag: true,
         updateFlag: true,
         deleteFlag: true

@@ -14,7 +14,8 @@
       templateUrl: '/app/directives/re-table/index.html',
       link: function ($scope, $elem, $attr) {
 
-        var columns = $scope.options.columns;
+        var options = $scope.options;
+        var columns = options.columns;
 
         /**
          * Init $scope.filter according to options.filterFlag and filter in each column
@@ -23,7 +24,7 @@
          *    Check filter in each column, options.columns.filter is the filter name of each column, while false means no filter in this column
          */
         function initFilter () {
-          if ('filterFlag' in $scope.options && $scope.options.filterFlag) {
+          if ('filterFlag' in options && options.filterFlag) {
             $scope.filter = {};
             for (var i = 0; i < columns.length; ++i) {
               if ('filter' in columns[i]) {
@@ -42,7 +43,7 @@
          * Default value in options.sortFlag is false, which means there is no sort feature
          */
         function initSort () {
-          if ('sortFlag' in $scope.options && $scope.options.sortFlag) {
+          if ('sortFlag' in options && options.sortFlag) {
             $scope.sort = {name: '', field: '', how: ''};
           }
         }
@@ -53,16 +54,36 @@
         function initTable () {
           initFilter();
           initSort();
-          $scope.options.tableRowFlag = 'tableRowOptions' in $scope.options;
-          $scope.options.pageFlag = 'page' in $scope.options;
-          $scope.options.searchFlag = 'search' in $scope.options;
-          $scope.options.editFlag = 'edit' in $scope.options;
+          options.tableRowFlag = 'tableRowOptions' in options;
+          options.pageFlag = 'page' in options;
+          options.searchFlag = 'search' in options;
+          options.editFlag = 'edit' in options;
         }
 
         initTable();
 
+        function createQuery () {
+          var query = {};
+          if (options.pageFlag) {
+            query.page_index = options.page.current
+          }
+          if (options.searchFlag && $scope.searchValue) {
+            query[options.search.name] = $scope.searchValue;
+          }
+          if (options.filterFlag) {
+            for (var e in $scope.filter) {
+              if (e.value || e.value === 0) {
+                query[e.key] = e.value;
+              }
+            }
+          }
+          if (options.sortFlag) {
+            
+          }
+        }
+
         $scope.sortBy = function ($index, $event) {
-          if ($scope.options.sortFlag) {
+          if (options.sortFlag) {
             var sortIn = 'sort' in columns[$index];
             var el = columns[$index];
             if (!sortIn || (sortIn && el.sort)) {
