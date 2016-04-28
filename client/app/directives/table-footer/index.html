@@ -15,17 +15,17 @@
       <span ng-bind="page.totalPages" class="text-primary"></span>
       <span class="mr5">页</span>
       <span>到第</span>
-      <input type="text" class="form-control input-sm" ng-model="skipPage" ng-enter="skipToPage()" ng-focus="onSkipFocus()" ng-blur="onSkipBlur()">
+      <input type="text" class="form-control input-sm" ng-model="skipPage" ng-enter="toPage(skipPage)" ng-focus="onSkipFocus()" ng-blur="onSkipBlur()">
       <span>页</span>
     </div>
     <ul class="pagination">
-      <li ng-class="{'disabled': currentPage - 1 <= 0 }" ng-click="prevPage()"><span >&laquo;</span></li>
+      <li ng-class="{'disabled': currentPage - 1 <= 0 }" ng-click="toPage(page.current - 1)"><span >&laquo;</span></li>
       <li ng-if="page.current - 2 > 0" ng-click="toPage(page.current - 2)"><span ng-bind="page.current - 2"></span></li>
       <li ng-if="page.current - 1 > 0" ng-click="toPage(page.current - 1)"><span ng-bind="page.current - 1"></span></li>
       <li ng-click="toPage(page.current)"  class="active"><span ng-bind="page.current"></span></li>
       <li ng-if="page.current + 1 > 0" ng-click="toPage(page.current + 1)"><span ng-bind="page.current + 1"></span></li>
       <li ng-if="page.current + 2 > 0" ng-click="toPage(page.current + 2)"><span ng-bind="page.current + 2"></span></li>
-      <li ng-class="{'disabled': currentPage + 1 > page.totalPages }" ng-click="nextPage()"><span>&raquo;</span></li>
+      <li ng-class="{'disabled': currentPage + 1 > page.totalPages }" ng-click="toPage(page.current + 1)"><span>&raquo;</span></li>
     </ul>
   </div>
 </div>

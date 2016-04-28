@@ -7,46 +7,30 @@
     return {
       restrict: 'EA',
       scope: {
+        search: '=',
         page: '='
       },
       replace: true,
       templateUrl: '/app/directives/table-footer/index.html',
       link: function ($scope, $elem, $attr) {
         $scope.skipPage = $scope.page.current;
+        $scope.page.index = $scope.page.current;
 
         $scope.$watch('page.current', function () {
           console.log('current page change');
           $scope.skipPage = $scope.page.current;
         });
 
-        $scope.prevPage = function () {
-          if ($scope.page.current - 1 > 0) {
-            $scope.page.toPage($scope.page.current - 1);
-          }
-        };
-
-        $scope.nextPage = function () {
-          if ($scope.page.current + 1 <= $scope.page.totalPages) {
-            $scope.page.toPage($scope.page.current + 1);
-          }
-        };
-
         $scope.toPage = function (page) {
           if (page > 0 && page <= $scope.page.totalPages) {
-            $scope.page.current = page;
-            console.log('go to page ' + $scope.page.current);
-            $scope.page.toPage(page);
-          }
-        };
-
-        $scope.skipToPage = function () {
-          $scope.skipPage = parseInt($scope.skipPage);
-          if ($scope.skipPage > 0 && $scope.skipPage <= $scope.page.totalPages) {
-            $scope.page.current = $scope.skipPage;
-            $scope.page.toPage($scope.skipPage);
-          }
-          else {
-            $scope.skipPage = $scope.page.current;
+            console.log(page);
+            $scope.page.index = page;
+            console.log('go to page ' + $scope.page.index);
+            $scope.search(function (res) {
+              $scope.page.current = $scope.page.index = parseInt(res.page_index);
+              $scope.page.totalPages = parseInt(res.total_pages);
+              $scope.page.totalRows = parseInt(res.total_rows);
+            });
           }
         };
 

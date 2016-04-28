@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-22.
  */
 (function () {
-  function reTable ($rootScope) {
+  function reTable ($http) {
     'ngInject';
     return {
       restrict: 'EA',
@@ -48,14 +48,24 @@
           }
         }
 
+        function initPage () {
+          options.pageFlag = 'page' in options;
+          if (!('toPage' in options.page)) {
+            options.page.toPage = function (page, next) {
+              $scope.search();
+
+            }
+          }
+        }
+
         /**
          * Init table
          */
         function initTable () {
           initFilter();
           initSort();
+          initPage();
           options.tableRowFlag = 'tableRowOptions' in options;
-          options.pageFlag = 'page' in options;
           options.searchFlag = 'search' in options;
           options.editFlag = 'edit' in options;
         }
@@ -65,7 +75,8 @@
         function createQuery () {
           var query = {};
           if (options.pageFlag) {
-            query.page_index = options.page.current
+            query.page_index = options.page.index;
+            query.page_rows = options.page.rows;
           }
           if (options.searchFlag && $scope.searchValue) {
             query[options.search.name] = $scope.searchValue;
@@ -78,9 +89,23 @@
             }
           }
           if (options.sortFlag) {
-            
+            if ($scope.sort.name) {
+              query[$scope.sort.field] = $scope.sort.how;
+            }
           }
+          return query;
         }
+
+        $scope.search = function (next) {
+          console.log(createQuery());
+          var argLength = arguments.length;
+          $http.get(options.url, {params: createQuery()}).success(function (res) {
+            $scope.data = res.data;
+            if (argLength == 1) {
+              next(res);
+            }
+          });
+        };
 
         $scope.sortBy = function ($index, $event) {
           if (options.sortFlag) {
@@ -94,8 +119,8 @@
               } else if ($scope.sort.name == columns[$index].name ) {
                 $scope.sort.how = $scope.sort.how === 'asc' ? 'desc' : 'asc';
               }
-              // Do search
-              console.log('Do search with sort')
+
+              $scope.search();
             }
           }
         }

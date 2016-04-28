@@ -55,9 +55,9 @@
         rows: 15,
         totalPages: 12,
         totalRows: 100,
-        toPage: function (page) {
-          console.log('request page ' + page);
-        }
+        //toPage: function (page) {
+        //  console.log('request page ' + page);
+        //}
       }
     };
     User.getUsers(function (res) {
