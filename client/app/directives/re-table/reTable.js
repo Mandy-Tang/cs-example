@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-22.
  */
 (function () {
-  function reTable ($http, $timeout) {
+  function reTable ($http, $sce) {
     'ngInject';
     return {
       restrict: 'EA',
@@ -67,6 +67,17 @@
           }
         }
 
+        function initHtml () {
+          options.htmlFlag = false;
+          for (var i = 0; i < columns.length; i++) {
+            if ('html' in columns[i]) {
+              if (!options.htmlFlag) {
+                options.htmlFlag = true;
+              }
+            }
+          }
+        }
+
         /**
          * Init table
          */
@@ -74,6 +85,7 @@
           initFilter();
           initSort();
           initPage();
+          initHtml();
           options.tableRowFlag = 'tableRowOptions' in options;
           options.searchFlag = 'search' in options;
           options.editFlag = 'edit' in options;
@@ -91,7 +103,7 @@
           }
           if (options.filterFlag) {
             for (var e in $scope.filter) {
-              if ($scope.filter[e] || $scope.filter[e] === 0) {
+              if ($scope.filter[e] || $scope.filter[e] === 0 || typeof $scope.filter[e] == 'boolean' ) {
                 query[e] = $scope.filter[e];
               }
             }
@@ -104,6 +116,10 @@
           }
           return query;
         }
+
+        $scope.fixData = function (data, html) {
+          return '<span class="label label-info">' + data + '</span>';
+        };
 
         function search (pageIndex, next) {
           console.log($scope.options);

@@ -21,7 +21,8 @@
     <tr ng-if="options.filterFlag" class="table-filter">
       <!--<th style="width: 30px"></th>-->
       <th ng-repeat="el in options.columns" ng-if="el.showed">
-        <input type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="search(1)" placeholder="{{el.placeholder || el.label}}">
+        <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="search(1)" placeholder="{{el.placeholder || el.label}}">
+        <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="search(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
       </th>
     </tr>
     <tr>
@@ -30,7 +31,10 @@
     </thead>
     <tbody ng-if="data.length > 0">
     <tr role="row" ng-repeat="el in data">
-      <td ng-repeat="el2 in options.columns" ng-if="el2.showed" ng-bind="el[el2.name]"></td>
+      <td ng-repeat="el2 in options.columns" ng-if="el2.showed">
+        <span ng-if="!el2.html" ng-bind="el[el2.name]"></span>
+        <span ng-if="el2.html" ng-bind-html="el2.html(el[el2.name]) | to_trusted"></span>
+      </td>
     </tr>
     </tbody>
   </table>
