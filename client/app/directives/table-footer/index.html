@@ -19,13 +19,13 @@
       <span>页</span>
     </div>
     <ul class="pagination">
-      <li ng-class="{'disabled': currentPage - 1 <= 0 }" ng-click="toPage(page.current - 1)"><span >&laquo;</span></li>
+      <li ng-class="{'disabled': page.current <= 1 }" ng-click="toPage(page.current - 1)"><span >&laquo;</span></li>
       <li ng-if="page.current - 2 > 0" ng-click="toPage(page.current - 2)"><span ng-bind="page.current - 2"></span></li>
       <li ng-if="page.current - 1 > 0" ng-click="toPage(page.current - 1)"><span ng-bind="page.current - 1"></span></li>
       <li ng-click="toPage(page.current)"  class="active"><span ng-bind="page.current"></span></li>
-      <li ng-if="page.current + 1 > 0" ng-click="toPage(page.current + 1)"><span ng-bind="page.current + 1"></span></li>
-      <li ng-if="page.current + 2 > 0" ng-click="toPage(page.current + 2)"><span ng-bind="page.current + 2"></span></li>
-      <li ng-class="{'disabled': currentPage + 1 > page.totalPages }" ng-click="toPage(page.current + 1)"><span>&raquo;</span></li>
+      <li ng-if="page.current + 1 <= page.totalPages" ng-click="toPage(page.current + 1)"><span ng-bind="page.current + 1"></span></li>
+      <li ng-if="page.current + 2 <= page.totalPages" ng-click="toPage(page.current + 2)"><span ng-bind="page.current + 2"></span></li>
+      <li ng-class="{'disabled': page.current > page.totalPages - 1 }" ng-click="toPage(page.current + 1)"><span>&raquo;</span></li>
     </ul>
   </div>
 </div>

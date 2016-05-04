@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-22.
  */
 (function () {
-  function reTable ($http) {
+  function reTable ($http, $timeout) {
     'ngInject';
     return {
       restrict: 'EA',
@@ -35,6 +35,7 @@
                 $scope.filter[columns[i].name] = '';
               }
             }
+            console.log($scope.filter);
           }
         }
 
@@ -46,15 +47,23 @@
           if ('sortFlag' in options && options.sortFlag) {
             $scope.sort = {name: '', field: '', how: ''};
           }
+          console.log($scope.sort)
         }
 
         function initPage () {
           options.pageFlag = 'page' in options;
-          if (!('toPage' in options.page)) {
-            options.page.toPage = function (page, next) {
-              $scope.search();
-
-            }
+          if (options.pageFlag) {
+            $scope.options.page.toPage = function (page) {
+              if (page > 0 && page <= $scope.options.page.totalPages) {
+                console.log(page);
+                console.log('go to page ' + $scope.options.page.index);
+                search(page, function (res) {
+                  $scope.options.page.current = $scope.options.page.index = parseInt(res.page_index);
+                  $scope.options.page.totalPages = parseInt(res.total_pages);
+                  $scope.options.page.totalRows = parseInt(res.total_rows);
+                });
+              }
+            };
           }
         }
 
@@ -70,8 +79,6 @@
           options.editFlag = 'edit' in options;
         }
 
-        initTable();
-
         function createQuery () {
           var query = {};
           if (options.pageFlag) {
@@ -79,16 +86,18 @@
             query.page_rows = options.page.rows;
           }
           if (options.searchFlag && $scope.searchValue) {
+            console.log($scope.searchValue);
             query[options.search.name] = $scope.searchValue;
           }
           if (options.filterFlag) {
             for (var e in $scope.filter) {
-              if (e.value || e.value === 0) {
-                query[e.key] = e.value;
+              if ($scope.filter[e] || $scope.filter[e] === 0) {
+                query[e] = $scope.filter[e];
               }
             }
           }
           if (options.sortFlag) {
+            console.log($scope.sort.name);
             if ($scope.sort.name) {
               query[$scope.sort.field] = $scope.sort.how;
             }
@@ -96,15 +105,41 @@
           return query;
         }
 
-        $scope.search = function (next) {
-          console.log(createQuery());
+        function search (pageIndex, next) {
+          console.log($scope.options);
           var argLength = arguments.length;
-          $http.get(options.url, {params: createQuery()}).success(function (res) {
-            $scope.data = res.data;
-            if (argLength == 1) {
+          if (argLength == 2) {
+            $scope.options.page.index = pageIndex;
+            $http.get(options.url, {params: createQuery()}).success(function (res) {
+              $scope.data = res.data;
               next(res);
+            });
+          } else if (argLength == 1) {
+            if (typeof arguments[0] == 'number') {
+              $scope.options.page.index = arguments[0];
+              $http.get(options.url, {params: createQuery()}).success(function (res) {
+                $scope.data = res.data;
+              });
+            } else if (typeof arguments[0] == 'function') {
+              $http.get(options.url, {params: createQuery()}).success(function (res) {
+                $scope.data = res.data;
+                next(res);
+              });
             }
-          });
+          } else {
+            $http.get(options.url, {params: createQuery()}).success(function (res) {
+              $scope.data = res.data;
+            });
+          }
+        }
+
+        $scope.search = function () {
+          if (options.pageFlag) {
+            return $scope.options.page.toPage(1);
+          }
+          else {
+            return search;
+          }
         };
 
         $scope.sortBy = function ($index, $event) {
@@ -119,12 +154,13 @@
               } else if ($scope.sort.name == columns[$index].name ) {
                 $scope.sort.how = $scope.sort.how === 'asc' ? 'desc' : 'asc';
               }
-
-              $scope.search();
+              $scope.options.page.toPage(1);
             }
           }
-        }
+        };
 
+        initTable();
+        $scope.search();
       }
     }
   }

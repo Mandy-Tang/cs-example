@@ -7,7 +7,6 @@
     return {
       restrict: 'EA',
       scope: {
-        search: '=',
         page: '='
       },
       replace: true,
@@ -21,18 +20,7 @@
           $scope.skipPage = $scope.page.current;
         });
 
-        $scope.toPage = function (page) {
-          if (page > 0 && page <= $scope.page.totalPages) {
-            console.log(page);
-            $scope.page.index = page;
-            console.log('go to page ' + $scope.page.index);
-            $scope.search(function (res) {
-              $scope.page.current = $scope.page.index = parseInt(res.page_index);
-              $scope.page.totalPages = parseInt(res.total_pages);
-              $scope.page.totalRows = parseInt(res.total_rows);
-            });
-          }
-        };
+        $scope.toPage = $scope.page.toPage;
 
         $scope.onSkipFocus = function () {
           $scope.skipPage = '';
