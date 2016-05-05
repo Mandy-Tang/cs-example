@@ -35,7 +35,6 @@
                 $scope.filter[columns[i].name] = '';
               }
             }
-            console.log($scope.filter);
           }
         }
 
@@ -47,16 +46,16 @@
           if ('sortFlag' in options && options.sortFlag) {
             $scope.sort = {name: '', field: '', how: ''};
           }
-          console.log($scope.sort)
         }
 
+        /**
+         * Init pageFlag and toPage function
+         */
         function initPage () {
           options.pageFlag = 'page' in options;
           if (options.pageFlag) {
             $scope.options.page.toPage = function (page) {
               if (page > 0 && page <= $scope.options.page.totalPages) {
-                console.log(page);
-                console.log('go to page ' + $scope.options.page.index);
                 search(page, function (res) {
                   $scope.options.page.current = $scope.options.page.index = parseInt(res.page_index);
                   $scope.options.page.totalPages = parseInt(res.total_pages);
@@ -67,6 +66,9 @@
           }
         }
 
+        /**
+         * Init htmlFlag
+         */
         function initHtml () {
           options.htmlFlag = false;
           for (var i = 0; i < columns.length; i++) {
@@ -77,6 +79,8 @@
             }
           }
         }
+
+
 
         /**
          * Init table
@@ -91,6 +95,10 @@
           options.editFlag = 'edit' in options;
         }
 
+        /**
+         * Create query object when search data
+         * @returns {Object}
+         */
         function createQuery () {
           var query = {};
           if (options.pageFlag) {
@@ -98,7 +106,6 @@
             query.page_rows = options.page.rows;
           }
           if (options.searchFlag && $scope.searchValue) {
-            console.log($scope.searchValue);
             query[options.search.name] = $scope.searchValue;
           }
           if (options.filterFlag) {
@@ -109,7 +116,6 @@
             }
           }
           if (options.sortFlag) {
-            console.log($scope.sort.name);
             if ($scope.sort.name) {
               query[$scope.sort.field] = $scope.sort.how;
             }
@@ -117,12 +123,12 @@
           return query;
         }
 
-        $scope.fixData = function (data, html) {
-          return '<span class="label label-info">' + data + '</span>';
-        };
-
+        /**
+         * Search data
+         * @param {Number} pageIndex - page turning to
+         * @param {Function} next - callback
+           */
         function search (pageIndex, next) {
-          console.log($scope.options);
           var argLength = arguments.length;
           if (argLength == 2) {
             $scope.options.page.index = pageIndex;
@@ -149,6 +155,10 @@
           }
         }
 
+        /**
+         * Determine search function used in this table according to option.pageFlag
+         * @returns {Function} - search function used in table
+           */
         $scope.search = function () {
           if (options.pageFlag) {
             return $scope.options.page.toPage(1);
@@ -158,6 +168,11 @@
           }
         };
 
+        /**
+         * Sort data in table according to the sort column
+         * @param {Number} $index - index in options.column
+         * @param {Object} $event - click event when click the sortable column header of table
+           */
         $scope.sortBy = function ($index, $event) {
           if (options.sortFlag) {
             var sortIn = 'sort' in columns[$index];

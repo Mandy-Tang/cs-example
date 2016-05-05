@@ -51,6 +51,7 @@ function appRun($rootScope, $state, $stateParams, $http, $cookies) {
 var app = angular.module('app', [
     'ngCookies',
     'ui.router',
+    'ui.bootstrap',
 
     'app.layout',
     'app.dashboard',

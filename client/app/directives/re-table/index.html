@@ -3,6 +3,7 @@
     <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding">
       <div ng-if="options.searchFlag" class="input-group table-search">
         <input type="text" class="form-control input-sm" ng-model="$parent.searchValue" ng-enter="search(1)" placeholder="{{getWord('关键字查找')}}">
+        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
       </div>
       <div ng-if="options.editFlag" class="table-edit">
         <a class="btn btn-primary btn-sm" href="" data-toggle="modal" role="button"
@@ -38,7 +39,7 @@
     </tr>
     </tbody>
   </table>
-  <table-footer page="options.page" ng-if="data.length > 0"></table-footer>
+  <table-footer page="options.page" ng-if="options.pageFlag && data.length > 0"></table-footer>
   <div class="no-result" ng-if="!data || data.length < 1">
     无查询结果，请尝试调整查询条件
   </div>

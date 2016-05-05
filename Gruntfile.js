@@ -38,10 +38,10 @@ module.exports = function (grunt) {
     vendorFiles: [
       '<%= client %>/bower_components/jquery/dist/jquery.min.js',
       '<%= client %>/bower_components/lodash/dist/lodash.min.js',
-      '<%= client %>/bower_components/bootstrap/dist/js/bootstrap.min.js',
       '<%= client %>/bower_components/angular/angular.min.js',
       '<%= client %>/bower_components/angular-cookies/angular-cookies.min.js',
-      '<%= client %>/bower_components/angular-ui-router/release/angular-ui-router.min.js'
+      '<%= client %>/bower_components/angular-ui-router/release/angular-ui-router.min.js',
+      '<%= client %>/bower_components/angular-bootstrap/ui-bootstrap.min.js'
     ],
     less: {
       bst: {
