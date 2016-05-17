@@ -172,6 +172,11 @@ body.cyber-skin {
       .table-search {
         width: 200px !important;
       }
+      .table-edit {
+        a {
+          margin-right: 5px;
+        }
+      }
     }
     .table-toolbar-show {
       > * {
@@ -264,6 +269,12 @@ body.cyber-skin {
     .table-toolbar, .table-footer {
       padding: 6px 8px;
     }
+  }
+  .must:first-child:before {
+    content: '*';
+    padding-right: 5px;
+    color: @brand-danger !important;
+    font-weight: 700 !important;
   }
 
   .input-sm {

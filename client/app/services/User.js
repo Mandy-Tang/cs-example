@@ -2,80 +2,157 @@
  * Created by mandy on 16-4-21.
  */
 (function () {
-  function User ($http, API_CONFIG) {
-    var self = this;
-    /**
-     * Get the user list
-     *
-     * @param pageIndex {Number} page index for pagination
-     * @param pageRows {Number} page rows in each page for pagination
-     * @param query {Object} pairs of key-value for query
-     * @param next {Function} callback
-     */
-    self.getUsers = function (pageIndex, pageRows, query, next) {
-      var params = null;
-      var httpGet = function (params, next) {
-        $http.get(API_CONFIG.USERS, {params: params}).success(function (res) {
-          next(res);
-        });
-      };
-      if (arguments.length === 4) { // pageIndex, pageRows, query, next
-        params = _.pickBy(query, function (value, key) {
-          return value && value !== '';
-        });
-        params.page_index = pageIndex;
-        params.page_rows = pageRows;
-        httpGet(params, next);
-      } else if (arguments.length === 3 ) { // pageIndex, pageRows, next
-        params = {
-          page_index: pageIndex,
-          page_rows: pageRows
-        };
-        httpGet(params, arguments[2]);
-      } else if (arguments.length === 1) { // next
-        params = {
-          page_index: 1,
-          page_rows: 10
-        };
-        httpGet(params, arguments[0]);
-      } else {
-
-      }
-    };
+  function User ($http, API_CONFIG, Alert, $rootScope, _, $cookies, $q, $httpParamSerializerJQLike) {
+    'ngInject';
 
     /**
-     * Get user detail by user id
-     *
-     * @param id {Number} user.id
-     * @param next {Function} callback
+     * Get the current user
+     * @returns {Promise}
      */
-    self.getUserById = function (id, next) {
-      $http.get(API_CONFIG.USER + '/' + id).success(function (res) {
-        next(res);
+    function getMe () {
+      var defer = $q.defer();
+      $http.get(API_CONFIG.ME).success(function (res) {
+        $rootScope.me = res;
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
       });
-    };
+      return defer.promise;
+    }
 
     /**
-     *
-     * @param user {Object} user
-     * @param next {Function} callback
+     * Update user information of current User
+     * @param {Object} user
+     * @returns {Promise}
      */
-    self.createUser = function (user, next) {
-      $http.put(API_CONFIG.USER, $.param(user)).success(function (res) {
-        next(res);
+    function updateMe (user) {
+      var defer = $q.defer();
+      var sUser = _.pick(user, ['realname', 'email', 'telephone', 'address', 'postcode', 'description']);
+      $http.put(API_CONFIG.ME, $httpParamSerializerJQLike(sUser)).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
       });
-    };
+      return defer.promise;
+    }
 
     /**
-     *
-     * @param id {Number} user.id
-     * @param next {Function} callback
+     * Update password of current User
+     * @param {Object} pwd
+     * @returns {Promise}
      */
-    self.deleteUserById = function (id, next) {
-      $http.delete(API_CONFIG.USER + '/' + id).success(function (res) {
-        next(res);
+    function updateMyPwd (pwd) {
+      var defer = $q.defer();
+      $http.put(API_CONFIG.ME_PWD, $httpParamSerializerJQLike(pwd)).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    /**
+     * Logout
+     */
+    function logout () {
+      $http.get(API_CONFIG.ME_LOGOUT).success(function (res) {
+        $cookies.remove('authtips');
+        location.href = '/login.html';
       });
     }
+
+    /**
+     * Create user
+     * @param {Object} user
+     * @returns {Promise}
+     */
+    function create (user) {
+      var defer = $q.defer();
+      var sUser = _.pick(user, ['username', 'realname', 'email', 'telephone', 'password', 'address', 'postcode', 'description'])
+      sUser.role_id = user.role.id;
+      $http.post(API_CONFIG.USER, $httpParamSerializerJQLike(sUser)).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    /**
+     * Update user
+     * @param {Object} user
+     * @returns {Promise}
+     */
+    function update (user) {
+      var defer = $q.defer();
+      var sUser = _.pick(user, ['username', 'realname', 'email', 'telephone', 'address', 'postcode', 'description']);
+      sUser.role_id = user.role.id;
+      $http.put(API_CONFIG.USER + '/' + user.id, $httpParamSerializerJQLike(sUser)).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    /**
+     * Delete user
+     * @param {Number} id
+     * @returns {Promise}
+     */
+    function dele (id) {
+      var defer = $q.defer();
+      if (id instanceof Array) {
+        id = String(id);
+      }
+      $http.delete(API_CONFIG.USER + '/' + id).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    /**
+     * Init user's password
+     * @param {Number} id
+     * @param {String} newPwd
+     * @returns {Promise}
+     */
+    function initPwd (id, newPwd) {
+      var defer = $q.defer();
+      $http.put(API_CONFIG.USER_PWD + '/' + id, $httpParamSerializerJQLike({new_password: newPwd})).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    /**
+     * Unlock locked user
+     * @param {Number} id
+     * @returns {Promise}
+     */
+    function unlock (id) {
+      var defer = $q.defer();
+      $http.put(API_CONFIG.USER_UNLOCK + '/' + id).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
+    this.getMe = getMe;
+    this.updateMe = updateMe;
+    this.updateMyPwd = updateMyPwd;
+    this.logout = logout;
+    this.create = create;
+    this.update = update;
+    this.dele = dele;
+    this.initPwd = initPwd;
+    this.unlock = unlock;
   }
   angular.module('app').service('User', User);
 })();

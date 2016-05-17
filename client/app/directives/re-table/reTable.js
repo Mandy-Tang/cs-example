@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-22.
  */
 (function () {
-  function reTable ($http, $sce) {
+  function reTable ($http) {
     'ngInject';
     return {
       restrict: 'EA',
@@ -35,6 +35,7 @@
                 $scope.filter[columns[i].name] = '';
               }
             }
+            $scope.options.filter = $scope.filter;
           }
         }
 
@@ -45,6 +46,7 @@
         function initSort () {
           if ('sortFlag' in options && options.sortFlag) {
             $scope.sort = {name: '', field: '', how: ''};
+            $scope.options.sort = $scope.sort;
           }
         }
 
@@ -80,7 +82,15 @@
           }
         }
 
-
+        /**
+         * Init searchFlag
+         */
+        function initSearchInput () {
+          if ('search' in options) {
+            options.searchFlag = true;
+            options.search.value = '';
+          }
+        }
 
         /**
          * Init table
@@ -90,9 +100,9 @@
           initSort();
           initPage();
           initHtml();
-          options.tableRowFlag = 'tableRowOptions' in options;
-          options.searchFlag = 'search' in options;
+          initSearchInput();
           options.editFlag = 'edit' in options;
+          options.tableRowFlag = 'tableRowOptions' in options;
         }
 
         /**
@@ -105,8 +115,8 @@
             query.page_index = options.page.index;
             query.page_rows = options.page.rows;
           }
-          if (options.searchFlag && $scope.searchValue) {
-            query[options.search.name] = $scope.searchValue;
+          if (options.searchFlag && options.search.value) {
+            query[options.search.name] = options.search.value;
           }
           if (options.filterFlag) {
             for (var e in $scope.filter) {
@@ -127,7 +137,7 @@
          * Search data
          * @param {Number} pageIndex - page turning to
          * @param {Function} next - callback
-           */
+         */
         function search (pageIndex, next) {
           var argLength = arguments.length;
           if (argLength == 2) {
@@ -158,7 +168,7 @@
         /**
          * Determine search function used in this table according to option.pageFlag
          * @returns {Function} - search function used in table
-           */
+         */
         $scope.search = function () {
           if (options.pageFlag) {
             return $scope.options.page.toPage(1);
@@ -172,7 +182,7 @@
          * Sort data in table according to the sort column
          * @param {Number} $index - index in options.column
          * @param {Object} $event - click event when click the sortable column header of table
-           */
+         */
         $scope.sortBy = function ($index, $event) {
           if (options.sortFlag) {
             var sortIn = 'sort' in columns[$index];

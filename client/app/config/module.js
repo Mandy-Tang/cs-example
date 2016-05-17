@@ -1,5 +1,9 @@
 'use strict';
 (function () {
+  function allRoleList (Role) {
+    'ngInject';
+    return Role.getAll();
+  }
   function configConfig($stateProvider) {
     'ngInject';
     $stateProvider
@@ -17,7 +21,10 @@
         views: {
           "content@app": {
             templateUrl: '/app/config/user/index.html',
-            controller: 'userCtrl'
+            controller: 'userCtrl',
+            resolve: {
+              allRoleList: allRoleList
+            }
           }
         }
       })

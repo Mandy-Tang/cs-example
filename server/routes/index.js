@@ -16,5 +16,7 @@ module.exports = function (app) {
   });
 
   app.route(apiRoot + '/users').get(require('./user/user_list'));
+  // Get the roles list
+  app.route(apiRoot + '/roles').get(require('./role/role_list'));
 
 };

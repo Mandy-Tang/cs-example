@@ -2,15 +2,10 @@
   <div class="table-toolbar">
     <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding">
       <div ng-if="options.searchFlag" class="input-group table-search">
-        <input type="text" class="form-control input-sm" ng-model="$parent.searchValue" ng-enter="search(1)" placeholder="{{getWord('关键字查找')}}">
+        <input type="text" class="form-control input-sm" ng-model="options.search.value" ng-enter="search(1)" placeholder="{{getWord('关键字查找')}}">
         <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
       </div>
-      <div ng-if="options.editFlag" class="table-edit">
-        <a class="btn btn-primary btn-sm" href="" data-toggle="modal" role="button"
-           data-target="#create-user-modal" ng-click="beginCreateUser()"><i class="fa fa-plus"></i></a>
-        <a class="btn btn-primary btn-sm" href="" data-toggle=" " role="button"
-           data-target=" " ng-click="beginDeleteUsers()"><i class="fa fa-trash-o"></i></a>
-      </div>
+      <table-edit edit="options.edit" ng-if="options.editFlag"></table-edit>
     </div>
     <div class="table-toolbar-show col-sm-6 col-xs-12 hidden-xs no-padding">
       <table-row ng-if="options.tableRowFlag" options="options" class="table-row"></table-row>
@@ -20,7 +15,6 @@
   <table id="user-table" class="table table-striped table-bordered table-hover table-detail" ng-class="{'table-sorting':options.sortFlag}">
     <thead>
     <tr ng-if="options.filterFlag" class="table-filter">
-      <!--<th style="width: 30px"></th>-->
       <th ng-repeat="el in options.columns" ng-if="el.showed">
         <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="search(1)" placeholder="{{el.placeholder || el.label}}">
         <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="search(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
@@ -34,13 +28,11 @@
     <tr role="row" ng-repeat="el in data">
       <td ng-repeat="el2 in options.columns" ng-if="el2.showed">
         <span ng-if="!el2.html" ng-bind="el[el2.name]"></span>
-        <span ng-if="el2.html" ng-bind-html="el2.html(el[el2.name]) | to_trusted"></span>
+        <span ng-if="el2.html" ng-compile-html="el2.html(el[el2.name])"></span>
       </td>
     </tr>
     </tbody>
   </table>
   <table-footer page="options.page" ng-if="options.pageFlag && data.length > 0"></table-footer>
-  <div class="no-result" ng-if="!data || data.length < 1">
-    无查询结果，请尝试调整查询条件
-  </div>
+  <div class="no-result" ng-if="!data || data.length < 1">无查询结果，请尝试调整查询条件</div>
 </div>

@@ -260,7 +260,7 @@
     "updated_time": "1442903260000",
     "last_logined_time": "1448948588000",
     "last_logined_ip": "10.10.12.2",
-    "locked": true
+    "locked": false
   },
   {
     "id": 14,
@@ -280,7 +280,7 @@
     "updated_time": "1442903260000",
     "last_logined_time": "1448948588000",
     "last_logined_ip": "10.10.12.2",
-    "locked": true
+    "locked": false
   },
   {
     "id": 15,

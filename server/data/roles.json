@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "name": "系统管理员",
+    "buildin": true,
+    "description": "系统管理员",
+    "createTime": 1441700291000,
+    "updateTime": null,
+    "menus": null
+  },
+  {
+    "id": 2,
+    "name": "用户管理员",
+    "buildin": true,
+    "description": "用户管理员",
+    "createTime": 1441700291000,
+    "updateTime": null,
+    "menus": null
+  },
+  {
+    "id": 3,
+    "name": "日志审计员",
+    "buildin": true,
+    "description": "描述",
+    "createTime": 1442299703000,
+    "updateTime": null,
+    "menus": null
+  },
+  {
+    "id": 4,
+    "name": "新增1",
+    "buildin": false,
+    "description": "描述",
+    "createTime": 1442299703000,
+    "updateTime": null,
+    "menus": null,
+    "parent": {
+      "id": 1
+    }
+  },
+  {
+    "id": 5,
+    "name": "新增2",
+    "buildin": false,
+    "description": "描述",
+    "createTime": 1442299703000,
+    "updateTime": null,
+    "menus": null,
+    "parent": {
+      "id": 1
+    }
+  }
+]

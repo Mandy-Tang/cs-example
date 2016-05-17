@@ -1,10 +1,10 @@
-<div class="dropdown">
-  <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div uib-dropdown class="dropdown" auto-close="outsideClick">
+  <a uib-dropdown-toggle class="dropdown-toggle">
     <i class="text-primary fa fa-bars"></i>
   </a>
-  <ul class="dropdown-menu " data-stopPropagation="true">
-    <div class="checkbox ml10" data-stopPropagation="true" ng-repeat="column in columns" >
-      <label data-stopPropagation="true">
+  <ul uib-dropdown-menu class="dropdown-menu " data-stopPropagation="true">
+    <div class="checkbox ml10" ng-repeat="column in columns" >
+      <label>
         <input type="checkbox" ng-model="column.showed"><span data-stopPropagation="true" ng-bind="column.label"></span>
       </label>
     </div>
