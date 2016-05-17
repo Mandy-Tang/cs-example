@@ -58,7 +58,7 @@
           if (options.pageFlag) {
             $scope.options.page.toPage = function (page) {
               if (page > 0 && page <= $scope.options.page.totalPages) {
-                search(page, function (res) {
+                doSearch(page, function (res) {
                   $scope.options.page.current = $scope.options.page.index = parseInt(res.page_index);
                   $scope.options.page.totalPages = parseInt(res.total_pages);
                   $scope.options.page.totalRows = parseInt(res.total_rows);
@@ -103,6 +103,8 @@
           initSearchInput();
           options.editFlag = 'edit' in options;
           options.tableRowFlag = 'tableRowOptions' in options;
+          options.toolbarFlag = options.searchFlag || options.editFlag || options.tableRowFlag || options.tableColumnFlag;
+
         }
 
         /**
@@ -110,27 +112,33 @@
          * @returns {Object}
          */
         function createQuery () {
-          var query = {};
-          if (options.pageFlag) {
-            query.page_index = options.page.index;
-            query.page_rows = options.page.rows;
-          }
-          if (options.searchFlag && options.search.value) {
-            query[options.search.name] = options.search.value;
-          }
-          if (options.filterFlag) {
-            for (var e in $scope.filter) {
-              if ($scope.filter[e] || $scope.filter[e] === 0 || typeof $scope.filter[e] == 'boolean' ) {
-                query[e] = $scope.filter[e];
+          if ('createQuery' in options) {
+            if (typeof options.createQuery == 'function') {
+              return options.createQuery();
+            }
+          } else {
+            var query = {};
+            if (options.pageFlag) {
+              query.page_index = options.page.index;
+              query.page_rows = options.page.rows;
+            }
+            if (options.searchFlag && options.search.value) {
+              query[options.search.name] = options.search.value;
+            }
+            if (options.filterFlag) {
+              for (var e in $scope.filter) {
+                if ($scope.filter[e] || $scope.filter[e] === 0 || typeof $scope.filter[e] == 'boolean' ) {
+                  query[e] = $scope.filter[e];
+                }
               }
             }
-          }
-          if (options.sortFlag) {
-            if ($scope.sort.name) {
-              query[$scope.sort.field] = $scope.sort.how;
+            if (options.sortFlag) {
+              if ($scope.sort.name) {
+                query[$scope.sort.field] = $scope.sort.how;
+              }
             }
+            return query;
           }
-          return query;
         }
 
         /**
@@ -138,7 +146,7 @@
          * @param {Number} pageIndex - page turning to
          * @param {Function} next - callback
          */
-        function search (pageIndex, next) {
+        function doSearch (pageIndex, next) {
           var argLength = arguments.length;
           if (argLength == 2) {
             $scope.options.page.index = pageIndex;
@@ -166,15 +174,15 @@
         }
 
         /**
-         * Determine search function used in this table according to option.pageFlag
-         * @returns {Function} - search function used in table
+         * Determine doSearch function used in this table according to option.pageFlag
+         * @returns {Function} - doSearch function used in table
          */
-        $scope.search = function () {
+        $scope.doSearch = options.doSearch = function () {
           if (options.pageFlag) {
             return $scope.options.page.toPage(1);
           }
           else {
-            return search;
+            return doSearch;
           }
         };
 
@@ -201,7 +209,7 @@
         };
 
         initTable();
-        $scope.search();
+        $scope.doSearch();
       }
     }
   }

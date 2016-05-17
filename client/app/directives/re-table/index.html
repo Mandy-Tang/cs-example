@@ -1,13 +1,13 @@
 <div class="re-table">
-  <div class="table-toolbar">
-    <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding">
+  <div class="table-toolbar" ng-if="options.toolbarFlag">
+    <div class="table-toolbar-action col-xs-12 col-sm-6 no-padding" ng-if="options.searchFlag || options.editFlag">
       <div ng-if="options.searchFlag" class="input-group table-search">
-        <input type="text" class="form-control input-sm" ng-model="options.search.value" ng-enter="search(1)" placeholder="{{getWord('关键字查找')}}">
+        <input type="text" class="form-control input-sm" ng-model="options.search.value" ng-enter="doSearch(1)" placeholder="{{getWord('关键字查找')}}">
         <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
       </div>
       <table-edit edit="options.edit" ng-if="options.editFlag"></table-edit>
     </div>
-    <div class="table-toolbar-show col-sm-6 col-xs-12 hidden-xs no-padding">
+    <div class="table-toolbar-show col-sm-6 col-xs-12 hidden-xs no-padding" ng-if="options.tableRowFlag || options.tableColumnFlag">
       <table-row ng-if="options.tableRowFlag" options="options" class="table-row"></table-row>
       <table-column ng-if="options.tableColumnFlag" columns="options.columns" class="table-column"></table-column>
     </div>
@@ -16,8 +16,8 @@
     <thead>
     <tr ng-if="options.filterFlag" class="table-filter">
       <th ng-repeat="el in options.columns" ng-if="el.showed">
-        <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="search(1)" placeholder="{{el.placeholder || el.label}}">
-        <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="search(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
+        <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="doSearch(1)" placeholder="{{el.placeholder || el.label}}">
+        <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="doSearch(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
       </th>
     </tr>
     <tr>

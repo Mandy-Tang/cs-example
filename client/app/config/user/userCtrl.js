@@ -112,13 +112,9 @@
       return '<span>' + date.toLocaleString() + '</span>';
     }
 
-    function checkboxHtml (el) {
-      var html = '<input type="checkbox" ng-if="!el.buildin" ng-checked="">';
-      return html;
-    }
     function handlerHtml (el) {
-      var html = '<i class="fa fa-edit" ng-click="(el2.handler[0])(el)"></i>';
-      html += '<i class="fa fa-remove" ng-click="(el2.handler[1])(el)"></i>';
+      var html = '<i class="fa fa-edit fa-btn" ng-click="(el2.handler[0])(el)"></i>';
+      html += '<i class="fa fa-remove fa-btn" ng-click="(el2.handler[1])(el)"></i>';
       return html;
     }
 
@@ -142,8 +138,11 @@
         controller: 'updateUserModalCtrl',
         size: 'md',
         resolve: {
-          user: function () {
+          selectedUser: function () {
             return el;
+          },
+          roleOptions: function () {
+            return roleOptions;
           }
         }
       });
