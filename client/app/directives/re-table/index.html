@@ -15,17 +15,20 @@
   <table id="user-table" class="table table-striped table-bordered table-hover table-detail" ng-class="{'table-sorting':options.sortFlag}">
     <thead>
     <tr ng-if="options.filterFlag" class="table-filter">
+      <th ng-if="options.checkboxFlag"></th>
       <th ng-repeat="el in options.columns" ng-if="el.showed">
         <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="doSearch(1)" placeholder="{{el.placeholder || el.label}}">
         <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="doSearch(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
       </th>
     </tr>
     <tr>
+      <th ng-if="options.checkboxFlag"></th>
       <th ng-repeat="el in options.columns track by $index" ng-if="el.showed" ng-class="{'sorting': el.sort, 'sorting-asc': el.name == sort.name && sort.how == 'asc', 'sorting-desc': el.name == sort.name && sort.how == 'desc'}" ng-click="sortBy($index, $event)"><span ng-bind="el.label"></span></th>
     </tr>
     </thead>
     <tbody ng-if="data.length > 0">
-    <tr role="row" ng-repeat="el in data">
+    <tr role="row" ng-repeat="el in data track by $index">
+      <td ng-if="options.checkboxFlag"><input type="checkbox" ng-click="options.checkbox.toggle($index)"></td>
       <td ng-repeat="el2 in options.columns" ng-if="el2.showed">
         <span ng-if="!el2.html" ng-bind="el[el2.name]"></span>
         <span ng-if="el2.html" ng-compile-html="el2.html(el[el2.name])"></span>

@@ -93,6 +93,24 @@
           }
         }
 
+
+        function initCheckbox () {
+          if (options.checkboxFlag) {
+            options.checkbox = {};
+            options.checkbox.checkedList = [];
+            options.checkbox.toggle = function ($index) {
+              var idx = options.checkbox.checkedList.indexOf($index);
+              if( idx > -1 ){
+                options.checkbox.checkedList.splice(idx, 1);
+              }
+              else{
+                options.checkbox.checkedList.push($index);
+              }
+              console.log(options.checkbox.checkedList.length)
+            }
+          }
+        }
+
         /**
          * Init table
          */
@@ -102,6 +120,7 @@
           initPage();
           initHtml();
           initSearchInput();
+          initCheckbox();
           options.editFlag = 'edit' in options;
           options.tableRowFlag = 'tableRowOptions' in options;
           options.toolbarFlag = options.searchFlag || options.editFlag || options.tableRowFlag || options.tableColumnFlag;

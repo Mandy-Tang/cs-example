@@ -41,6 +41,7 @@
       tableColumnFlag: true,
       filterFlag: true,
       sortFlag: true,
+      checkboxFlag: true,
       tableRowOptions: [{row: 15}, {row: 25}, {row: 50}, {row: 100}],
       search: {
         name: 'search'
