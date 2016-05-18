@@ -32,6 +32,7 @@
                   $scope.filter[columns[i].filter] = '';
                 }
               }  else {
+                columns[i].filter = columns[i].name;
                 $scope.filter[columns[i].name] = '';
               }
             }
