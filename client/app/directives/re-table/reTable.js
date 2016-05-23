@@ -28,8 +28,25 @@
             $scope.filter = {};
             for (var i = 0; i < columns.length; ++i) {
               if ('filter' in columns[i]) {
-                if (columns[i].filter) {
-                  $scope.filter[columns[i].filter] = '';
+                var filter = columns[i].filter;
+                switch (typeof filter) {
+                  case 'string':
+                    $scope.filter[filter] = '';
+                    break;
+                  case 'boolean':
+                    break;
+                  case 'object':
+                    if (columns[i].filterType == 'dateRangePicker') {
+                      if (filter.length == 2) {
+                        $scope.filter[filter[0]] = '';
+                        $scope.filter[filter[1]] = '';
+                      } else if (filter.length == 1) {
+                        $scope.filter[filter[0]] = '';
+                      }
+                    }
+                    break;
+                  default :
+                    break;
                 }
               }  else {
                 columns[i].filter = columns[i].name;

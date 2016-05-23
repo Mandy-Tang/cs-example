@@ -16,9 +16,17 @@
     <thead>
     <tr ng-if="options.filterFlag" class="table-filter">
       <th ng-if="options.checkboxFlag"></th>
-      <th ng-repeat="el in options.columns" ng-if="el.showed">
-        <input ng-if="!el.filterType" type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="doSearch(1)" placeholder="{{el.placeholder || el.label}}">
-        <select ng-if="el.filterType=='select'" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="doSearch(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
+      <th ng-repeat="el in options.columns" ng-if="el.showed" ng-switch="el.filterType">
+        <select ng-switch-when="select" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-change="doSearch(1)" ng-options="o.value as o.label for o in el.filterOptions"></select>
+        <ng-date-range-picker ng-switch-when="dateRangePicker"
+                              single-date-picker="{{el.filter.length == 1}}"
+                              start-time="filter[el.filter[0]]"
+                              end-time="filter[el.filter[1]]"
+                              on-apply="doSearch(1)"
+                              on-cancel="doSearch(1)"
+                              placeholder="{{el.placeholder || el.label}}"
+                              class="form-control input-sm"></ng-date-range-picker>
+        <input ng-switch-default type="text" class="form-control input-sm" ng-model="filter[el.filter]" ng-disabled="!el.filter" ng-enter="doSearch(1)" placeholder="{{el.placeholder || el.label}}">
       </th>
     </tr>
     <tr>

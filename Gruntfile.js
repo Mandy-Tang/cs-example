@@ -24,7 +24,8 @@ module.exports = function (grunt) {
       '<%= client %>/styles/less/**/*.less'
     ],
     publicCssFiles: [
-      '<%= client %>/styles/css/font-awesome.css'
+      '<%= client %>/styles/css/font-awesome.css',
+      '<%= client %>/styles/css/daterangepicker.css'
     ],
     serverFiles: [
       '<%= server %>/**/*.js'
@@ -38,6 +39,8 @@ module.exports = function (grunt) {
     vendorFiles: [
       '<%= client %>/bower_components/jquery/dist/jquery.min.js',
       '<%= client %>/bower_components/lodash/dist/lodash.min.js',
+      '<%= client %>/bower_components/moment/min/moment.min.js',
+      '<%= client %>/bower_components/bootstrap-daterangepicker/daterangepicker.js',
       '<%= client %>/bower_components/angular/angular.min.js',
       '<%= client %>/bower_components/angular-cookies/angular-cookies.min.js',
       '<%= client %>/bower_components/angular-ui-router/release/angular-ui-router.min.js',
