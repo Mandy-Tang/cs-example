@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-21.
  */
 (function () {
-  function User ($http, API_CONFIG, Alert, $rootScope, _, $cookies, $q, $httpParamSerializerJQLike) {
+  function User ($http, API_CONFIG, $rootScope, _, $cookies, $q, $httpParamSerializerJQLike) {
     'ngInject';
 
     /**
@@ -144,6 +144,21 @@
       return defer.promise;
     }
 
+    /**
+     * Get user detail by id
+     * @param {Number} id
+     * @returns {Promise}
+     */
+    function getDetail (id) {
+      var defer = $q.defer();
+      $http.get(API_CONFIG.USER + '/' + id).success(function (res) {
+        defer.resolve(res);
+      }).error(function(res) {
+        defer.reject(res);
+      });
+      return defer.promise;
+    }
+
     this.getMe = getMe;
     this.updateMe = updateMe;
     this.updateMyPwd = updateMyPwd;
@@ -153,6 +168,7 @@
     this.dele = dele;
     this.initPwd = initPwd;
     this.unlock = unlock;
+    this.getDetail = getDetail;
   }
   angular.module('app').service('User', User);
 })();

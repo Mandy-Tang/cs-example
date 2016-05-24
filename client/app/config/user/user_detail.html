@@ -1,0 +1,35 @@
+
+<!-- BEGIN 个人信息-->
+<div class="row no-margin">
+  <div class="col-md-1 col-sm-2 col-xs-12">
+    <img src="/styles/image/profile_header.png" class="user-img img-circle">
+  </div>
+  <div class="col-md-11 col-sm-10 col-xs-12 text-left">
+    <h5 class="mb10"><span ng-bind="$root.getWord('用户名')"></span>：&nbsp;<span ng-bind="el.username"></span>&nbsp;<small class="label label-warning" ng-if="el.locked">此用户已锁定</small></h5>
+    <ul class="list-inline">
+      <li><span ng-bind="$root.getWord('用户基本信息')"></span>：</li>
+      <li><i class="iconfont" ng-class="{'icon-sysadmin':el.role.name==='系统管理员','icon-useradmin':el.role.name==='用户管理员','icon-logchecker':el.role.name==='日志审计员','icon-adduser':el.role.name!=='系统管理员'&&el.role.name!=='日志审计员'&&el.role.name!=='用户管理员'}"></i>&nbsp;<span ng-bind="el.realname"></span></li>
+      <li><i class="iconfont" ng-class="{'icon-sysadmin':el.role.name==='系统管理员','icon-useradmin':el.role.name==='用户管理员','icon-logchecker':el.role.name==='日志审计员','icon-adduser':el.role.name!=='系统管理员'&&el.role.name!=='日志审计员'&&el.role.name!=='用户管理员'}"></i>&nbsp;<span ng-bind="el.role.name"></span></li>
+      <li><i class="iconfont icon-email"></i>&nbsp;<span ng-bind="el.email"></span></li>
+      <li><i class="iconfont icon-phone"></i>&nbsp;<span ng-bind="el.telephone"></span></li>
+    </ul>
+    <ul class="list-inline">
+      <li><span ng-bind="$root.getWord('用户联系地址')"></span>：</li>
+      <li><span ng-bind="el.location"></span>&nbsp;<span ng-bind="el.postcode"></span></li>
+    </ul>
+    <ul class="list-inline">
+      <li><span ng-bind="$root.getWord('用户创建时间')"></span>：</li>
+      <li><i class="iconfont icon-time"></i>&nbsp;<span ng-bind="el.created_time | time_to_string"></span></li>
+    </ul>
+    <ul class="list-inline">
+      <li><span ng-bind="$root.getWord('最后修改时间')"></span>：</li>
+      <li><i class="iconfont icon-time"></i>&nbsp;<span ng-bind="el.updated_time | time_to_string"></span></li>
+    </ul>
+    <ul class="list-inline">
+      <li><span ng-bind="$root.getWord('最后登录信息')"></span>：</li>
+      <li><i class="iconfont icon-time"></i>&nbsp;<span ng-bind="el.last_logined_time | time_to_string"></span></li>
+      <li><i class="iconfont icon-ip"></i>&nbsp;<span ng-bind="el.last_logined_ip"></span></li>
+    </ul>
+  </div>
+</div>
+<!-- END 个人信息-->

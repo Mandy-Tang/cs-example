@@ -3,7 +3,7 @@
  */
 'use strict';
 (function () {
-  function userCtrl ($scope, API_CONFIG, $uibModal, allRoleList) {
+  function userCtrl ($scope, API_CONFIG, $uibModal, allRoleList, User) {
     'ngInject';
 
     var roleOptions = generateRoleOptions();
@@ -35,13 +35,14 @@
         {name: 'description', label: '描述', showed: true, filter: false, sort: false},
         {name: 'created_time', label: '创建时间', showed: true, filter: 'filter_created_time', placeholder: '创建时间', sort: 'order_realname', html: createdTimeHtml},
         {name: 'locked', label: '锁定状态', showed: true, filter: 'filter_locked', filterType: 'select', filterOptions: lockedOptions, placeholder: '锁定状态', sort: 'order_realname', html: lockedHtml},
-        {name: 'handler', label: '操作', showed: true, filter: false, sort: false, html: handlerHtml, handler: [openUpdateUserModal, openDeleteUserModal]}
+        {name: 'handler', label: '操作', showed: true, filter: false, sort: false, html: handlerHtml, handler: [openUserDetail, openUpdateUserModal, openDeleteUserModal]}
       ],
       url: API_CONFIG.USERS,
       tableColumnFlag: true,
       filterFlag: true,
       sortFlag: true,
       checkboxFlag: true,
+      detailHtml: detailHtml,
       tableRowOptions: [{row: 15}, {row: 25}, {row: 50}, {row: 100}],
       search: {
         name: 'search'
@@ -114,9 +115,16 @@
     }
 
     function handlerHtml (el) {
-      var html = '<i class="fa fa-edit btn-text btn-primary" ng-click="(el2.handler[0])(el)"></i>';
-      html += '<i class="fa fa-remove btn-text btn-default" ng-click="(el2.handler[1])(el)"></i>';
+      var html = '<i class="fa fa-info btn-text btn-info" title="详情" ng-click="(el2.handler[0])(el)"></i>';
+      html += '<i class="fa fa-edit btn-text btn-primary" title="修改信息" ng-click="(el2.handler[1])(el)"></i>';
+      html += '<i class="fa fa-undo btn-text btn-primary" title="重置密码" ng-click="(el2.handler[1])(el)"></i>';
+      html += '<i ng-if="el.locked" class="fa fa-unlock btn-text btn-warning" title="解除锁定" ng-click="(el2.handler[1])(el)"></i>';
+      html += '<i class="fa fa-trash btn-text btn-default" title="删除" ng-click="(el2.handler[2])(el)"></i>';
       return html;
+    }
+
+    function detailHtml (el) {
+      return '<td colspan="10" class="td-detail" ng-show="el.detailOpened" ng-include="\'/app/config/user/user_detail.html\'"></td>';
     }
 
     function openCreateUserModal () {
@@ -173,7 +181,21 @@
       });
     }
 
-
+    function openUserDetail (el) {
+      if (el.detailOpened) {
+        el.detailOpened = false;
+      } else {
+        for (var i in $scope.data) {
+          $scope.data[i].detailOpened = false;
+        }
+        if (!el.hasOwnProperty('detail')) {
+          User.getDetail(el.id).then(function (res) {
+            el.detail = res;
+          });
+        }
+        el.detailOpened = true;
+      }
+    }
 
   }
   angular.module('app.config').controller('userCtrl', userCtrl);

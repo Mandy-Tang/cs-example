@@ -12,7 +12,7 @@
       <table-column ng-if="options.tableColumnFlag" columns="options.columns" class="table-column"></table-column>
     </div>
   </div>
-  <table id="user-table" class="table table-striped table-bordered table-hover table-detail" ng-class="{'table-sorting':options.sortFlag}">
+  <table id="user-table" class="table table-bordered table-hover" ng-class="{'table-sorting':options.sortFlag, 'table-detail': options.detailFlag, 'table-striped': !options.detailFlag }">
     <thead>
     <tr ng-if="options.filterFlag" class="table-filter">
       <th ng-if="options.checkboxFlag"></th>
@@ -34,7 +34,17 @@
       <th ng-repeat="el in options.columns track by $index" ng-if="el.showed" ng-class="{'sorting': el.sort, 'sorting-asc': el.name == sort.name && sort.how == 'asc', 'sorting-desc': el.name == sort.name && sort.how == 'desc'}" ng-click="sortBy($index, $event)"><span ng-bind="el.label"></span></th>
     </tr>
     </thead>
-    <tbody ng-if="data.length > 0">
+    <tbody ng-if="options.detailFlag && data.length > 0">
+    <tr role="row" ng-repeat-start="el in data track by $index" ng-class="{'detail-opened': el.detailOpened}">
+      <td ng-if="options.checkboxFlag"><input type="checkbox" ng-checked="options.checkbox.checkedAll" ng-click="options.checkbox.toggle($index)"></td>
+      <td ng-repeat="el2 in options.columns" ng-if="el2.showed">
+        <span ng-if="!el2.html" ng-bind="el[el2.name]"></span>
+        <span ng-if="el2.html" ng-compile-html="el2.html(el[el2.name])"></span>
+      </td>
+    </tr>
+    <tr ng-repeat-end="" ng-compile-html="options.detailHtml(el)"></tr>
+    </tbody>
+    <tbody ng-if="!options.detailFlag && data.length > 0">
     <tr role="row" ng-repeat="el in data track by $index">
       <td ng-if="options.checkboxFlag"><input type="checkbox" ng-checked="options.checkbox.checkedAll" ng-click="options.checkbox.toggle($index)"></td>
       <td ng-repeat="el2 in options.columns" ng-if="el2.showed">

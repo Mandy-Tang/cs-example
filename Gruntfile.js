@@ -288,6 +288,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-vendor', ['concat:vendor', 'uglify:vendor']);
   grunt.registerTask('all', ['css', 'build']);
   grunt.registerTask('dev', ['css-bst', 'css-public', 'build', 'concurrent']);
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('dev-dev', ['css-bst', 'css-public', 'build-app', 'concurrent']);
+  grunt.registerTask('default', ['dev-dev']);
 
 };

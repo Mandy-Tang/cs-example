@@ -76,7 +76,7 @@
           if (options.pageFlag) {
             $scope.options.page.toPage = function (page) {
               if (page > 0 && page <= $scope.options.page.totalPages) {
-                doSearch(page, function (res) {
+                doSearch(page).then(function (res) {
                   $scope.options.page.current = $scope.options.page.index = parseInt(res.page_index);
                   $scope.options.page.totalPages = parseInt(res.total_pages);
                   $scope.options.page.totalRows = parseInt(res.total_rows);
@@ -170,6 +170,7 @@
           options.editFlag = 'edit' in options;
           options.tableRowFlag = 'tableRowOptions' in options;
           options.toolbarFlag = options.searchFlag || options.editFlag || options.tableRowFlag || options.tableColumnFlag;
+          options.detailFlag = 'detailHtml' in options;
         }
 
         /**
@@ -207,39 +208,29 @@
         }
 
         /**
-         * Search data
-         * @param {Number} pageIndex - page turning to
-         * @param {Function} next - callback
+         * search data
+         * @param {Number} pageIndex
+         * @returns {Promise}
          */
-        function doSearch (pageIndex, next) {
-          console.log(createQuery())
-          var argLength = arguments.length;
-          if (argLength == 2) {
+        function doSearch (pageIndex) {
+          console.log(createQuery());
+          var defer = $q.defer();
+          if (arguments.length > 0 && typeof arguments[0] == 'number') {
             $scope.options.page.index = pageIndex;
-            $http.get(options.url, {params: createQuery()}).success(function (res) {
-              $scope.data = res.data;
-              next(res);
-            });
-          } else if (argLength == 1) {
-            if (typeof arguments[0] == 'number') {
-              $scope.options.page.index = arguments[0];
-              $http.get(options.url, {params: createQuery()}).success(function (res) {
-                $scope.data = res.data;
-              });
-            } else if (typeof arguments[0] == 'function') {
-              $http.get(options.url, {params: createQuery()}).success(function (res) {
-                $scope.data = res.data;
-                next(res);
-              });
+          }
+          $http.get(options.url, {params: createQuery()}).success(function (res) {
+            $scope.data = res.data;
+            if (options.detailFlag) {
+
             }
-          } else {
-            $http.get(options.url, {params: createQuery()}).success(function (res) {
-              $scope.data = res.data;
-            });
-          }
-          if (options.checkboxFlag) {
-            resetCheckbox();
-          }
+            if (options.checkboxFlag) {
+              resetCheckbox();
+            }
+            defer.resolve(res);
+          }).error(function (res) {
+            defer.reject(res);
+          });
+          return defer.promise;
         }
 
         /**

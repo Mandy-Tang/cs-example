@@ -16,6 +16,9 @@ module.exports = function (app) {
   });
 
   app.route(apiRoot + '/users').get(require('./user/user_list'));
+  app.route(apiRoot + '/user/:id')
+    // Get the detail information of a user
+    .get(require('./user/user_detail'))
   // Get the roles list
   app.route(apiRoot + '/roles').get(require('./role/role_list'));
 
