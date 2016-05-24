@@ -280,14 +280,30 @@ body.cyber-skin {
   .input-sm {
     font-size: 14px;
   }
-  .fa-btn {
-    padding: 0 5px;
+  .btn-text {
+    display: inline;
+    padding: .3em;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
     cursor: pointer;
-    &:hover, &:focus {
-      color: @link-hover-color;
+  }
+  td .btn-text {
+    margin-right: 5px;
+  }
+  td .btn-text.fa {
+    display: inline-block;
+    margin: -10px 5px -10px 0;
+    min-width: 22px;
+  }
+  th,td {
+    input[type="checkbox"] {
+      margin: 0 !important;
     }
   }
-
   .footer {
     position: absolute;
     left: 0;

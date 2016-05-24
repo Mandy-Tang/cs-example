@@ -2,7 +2,7 @@
  * Created by mandy on 16-4-22.
  */
 (function () {
-  function reTable ($http) {
+  function reTable ($http, $q, _) {
     'ngInject';
     return {
       restrict: 'EA',
@@ -110,11 +110,25 @@
           }
         }
 
+        /**
+         * Rest checkbox when doSearch
+         */
+        function resetCheckbox () {
+          console.log('reset checkbox')
+          options.checkbox.checkedList = [];
+          options.checkbox.checkedAll = false;
+          console.log($elem.find('input[type="checkbox"]'))
+          $elem.find('input[type="checkbox"]').attr('checked', false);
+        }
 
+        /**
+         * Init checkbox
+         */
         function initCheckbox () {
           if (options.checkboxFlag) {
             options.checkbox = {};
             options.checkbox.checkedList = [];
+            options.checkbox.checkedAll = false;
             options.checkbox.toggle = function ($index) {
               var idx = options.checkbox.checkedList.indexOf($index);
               if( idx > -1 ){
@@ -123,7 +137,22 @@
               else{
                 options.checkbox.checkedList.push($index);
               }
-              console.log(options.checkbox.checkedList.length)
+              console.log(options.checkbox.checkedList)
+            };
+            options.checkbox.toggleAll = function () {
+              if (options.checkbox.checkedAll) {
+                var length = $scope.data.length;
+                if (options.checkbox.checkedList.length != length) {
+                  var list = [];
+                  for (var i = 0; i < length; i++) {
+                    list.push(i);
+                  }
+                  options.checkbox.checkedList = _.clone(list);
+                }
+              } else {
+                options.checkbox.checkedList = [];
+              }
+              console.log(options.checkbox.checkedList)
             }
           }
         }
@@ -141,7 +170,6 @@
           options.editFlag = 'edit' in options;
           options.tableRowFlag = 'tableRowOptions' in options;
           options.toolbarFlag = options.searchFlag || options.editFlag || options.tableRowFlag || options.tableColumnFlag;
-
         }
 
         /**
@@ -184,6 +212,7 @@
          * @param {Function} next - callback
          */
         function doSearch (pageIndex, next) {
+          console.log(createQuery())
           var argLength = arguments.length;
           if (argLength == 2) {
             $scope.options.page.index = pageIndex;
@@ -207,6 +236,9 @@
             $http.get(options.url, {params: createQuery()}).success(function (res) {
               $scope.data = res.data;
             });
+          }
+          if (options.checkboxFlag) {
+            resetCheckbox();
           }
         }
 

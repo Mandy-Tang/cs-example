@@ -33,7 +33,7 @@
         {name: 'email', label: '邮箱', showed: true, filter: 'filter_email', placeholder: '邮箱', sort: 'order_email'},
         {name: 'telephone', label: '电话', showed: true, filter: 'filter_telephone', placeholder: '电话', sort: 'order_telephone'},
         {name: 'description', label: '描述', showed: true, filter: false, sort: false},
-        {name: 'created_time', label: '创建时间', showed: true, filter: ['filter_created_time_from', 'filter_created_time_to'], filterType: 'dateRangePicker', placeholder: '创建时间', sort: 'order_realname', html: createdTimeHtml},
+        {name: 'created_time', label: '创建时间', showed: true, filter: 'filter_created_time', placeholder: '创建时间', sort: 'order_realname', html: createdTimeHtml},
         {name: 'locked', label: '锁定状态', showed: true, filter: 'filter_locked', filterType: 'select', filterOptions: lockedOptions, placeholder: '锁定状态', sort: 'order_realname', html: lockedHtml},
         {name: 'handler', label: '操作', showed: true, filter: false, sort: false, html: handlerHtml, handler: [openUpdateUserModal, openDeleteUserModal]}
       ],
@@ -114,8 +114,8 @@
     }
 
     function handlerHtml (el) {
-      var html = '<i class="fa fa-edit fa-btn" ng-click="(el2.handler[0])(el)"></i>';
-      html += '<i class="fa fa-remove fa-btn" ng-click="(el2.handler[1])(el)"></i>';
+      var html = '<i class="fa fa-edit btn-text btn-primary" ng-click="(el2.handler[0])(el)"></i>';
+      html += '<i class="fa fa-remove btn-text btn-default" ng-click="(el2.handler[1])(el)"></i>';
       return html;
     }
 
@@ -129,6 +129,11 @@
           roleOptions: function () {
             return roleOptions;
           }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        if (result == 'success') {
+          $scope.options.doSearch(1);
         }
       });
     }
@@ -147,15 +152,24 @@
           }
         }
       });
+      modalInstance.result.then(function (result) {
+        if (result == 'success') {
+          $scope.options.doSearch(1);
+        }
+      });
     }
 
-    function openDeleteUserModal (el) {
-      console.log(el);
+    function openDeleteUserModal ($index) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: '/app/config/user/delete-user-modal/index.html',
         controller: 'deleteUserModalCtrl',
         size: 'md'
+      });
+      modalInstance.result.then(function (result) {
+        if (result == 'success') {
+          $scope.options.doSearch(1);
+        }
       });
     }
 
