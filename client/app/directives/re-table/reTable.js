@@ -75,7 +75,7 @@
           options.pageFlag = 'page' in options;
           if (options.pageFlag) {
             $scope.options.page.toPage = function (page) {
-              if (page > 0 && page <= $scope.options.page.totalPages) {
+              if ((page > 0 && page <= $scope.options.page.totalPages) || page == 1) {
                 doSearch(page).then(function (res) {
                   $scope.options.page.current = $scope.options.page.index = parseInt(res.page_index);
                   $scope.options.page.totalPages = parseInt(res.total_pages);
