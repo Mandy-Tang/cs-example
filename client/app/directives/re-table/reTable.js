@@ -53,6 +53,11 @@
                 $scope.filter[columns[i].name] = '';
               }
             }
+            if ($scope.options.hasOwnProperty('filter')) {
+              for (var i in $scope.options.filter) {
+                $scope.filter[i] = $scope.options.filter[i];
+              }
+            }
             $scope.options.filter = $scope.filter;
           }
         }
