@@ -8,9 +8,9 @@
       link: function(scope, element) {
         var listener = function(event, toState, toParams, fromState, fromParams) {
           // Default title - load on Dashboard 1
-          var title = 'MEAN-BLOG';
+          var title = 'CS-SYSTEM';
           // Create your own title pattern
-          if (toState.data && toState.data.title) title = 'CS-EXAMPLE | ' + toState.data.title;
+          if (toState.data && toState.data.title) title = 'CS-SYSTEM | ' + toState.data.title;
           $timeout(function() {
             element.text(title);
           });

@@ -1,12 +1,12 @@
 {
-  "name": "cs-example",
+  "name": "cs-system",
   "description": "",
   "main": "",
   "authors": [
     "mandy <189658646@qq.com>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Mandy-Tang/cs-example",
+  "homepage": "https://github.com/Mandy-Tang/cs-system",
   "moduleType": [],
   "ignore": [
     "**/.*",

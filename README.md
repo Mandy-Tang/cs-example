@@ -1,5 +1,12 @@
-# cs-example
-A client/server separated example based on nodejs, express, angularjs, bootstrap
+# cs-system
+A client/server separated web system based on nodejs, express, angularjs, bootstrap
 
-# cs
-Client and server
+# Quick install and start
+Install npm packages:
+$ npm install
+Install bower components:
+$ bower install
+Start the server:
+$ npm start
+or start the server via grunt:
+$ grunt

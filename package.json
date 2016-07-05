@@ -1,5 +1,5 @@
 {
-  "name": "cs-example",
+  "name": "cs-system",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -26,6 +26,7 @@
     "grunt-contrib-less": "^1.3.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-csscomb": "^3.1.0",
     "grunt-jscs": "^2.8.0",
     "grunt-ng-annotate": "^2.0.2",
     "grunt-nodemon": "^0.4.2",

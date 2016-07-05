@@ -6,7 +6,7 @@
       .state('app', {
         abstract: true,
         data: {
-          title: 'CS-EXAMPLE'
+          title: 'cs-system'
         },
         views: {
           root: {
